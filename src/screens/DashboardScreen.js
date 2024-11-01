@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground, TouchableOpacity, Text } from 'react-native';
 
-const DashboardScreen = () => {
+const DashboardScreen = ({ navigation }) => {
   return (
     <ImageBackground 
       source={require('../assets/img/Dashboard.jpg')}
@@ -13,10 +13,10 @@ const DashboardScreen = () => {
       </Text>
       </View>
       <View style={styles.containerButton}>
-        <TouchableOpacity style={styles.buttonUp}>
+        <TouchableOpacity style={styles.buttonUp} onPress={()=>navigation.navigate("Register")} >
           <Text style={styles.buttonTextUp}>Cadastre-se</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonIn}>
+        <TouchableOpacity style={styles.buttonIn} onPress={()=>navigation.navigate("Login")}>
           <Text style={styles.buttonTextIn}>Entrar</Text>
         </TouchableOpacity>
       </View>

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, View, ImageBackground, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,12 +14,22 @@ const SignUpScreen = () => {
 
   return (
     <ImageBackground 
-      source={require('../assets/img/LoginAndSignUp.jpeg')}
+      source={require('../assets/img/LoginAndSignUp.png')}
       style={styles.background}
     >
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
+      <View style={styles.inputContainer}>
           <Ionicons name="person-outline" size={24} color="#fff" style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Name"
+            placeholderTextColor="#fff"
+            value={name}
+            onChangeText={setName}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Ionicons name="mail-outline" size={24} color="#fff" style={styles.icon} />
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -39,14 +50,11 @@ const SignUpScreen = () => {
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Menu")}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text style={styles.forgotText}>Forgot your password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.signUpText}>SIGN UP</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    backgroundColor: 'rgba(51, 51, 51, 0.85)',
     borderRadius: 10,
     marginVertical: 10,
     paddingHorizontal: 10,
@@ -101,7 +109,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize:14,
     marginBottom: 20,
-    fontWeight:"600"
+    fontWeight:"600",
+    textDecorationLine: 'underline'
   },
   signUpText: {
     color: '#fff',
