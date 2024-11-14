@@ -1,16 +1,50 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ImageBackground, TextInput, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, ImageBackground, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
+  const navigation= useNavigation()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log('Email:', email);
-    console.log('Senha:', password);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+console.log(email)
+console.log(password);
+
+
+  const user = {
+    email: email,
+    password: password,
   };
 
+  try {
+    const response = await fetch("http://10.92.198.9:3000/api/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    
+    if (response.ok) {
+       Alert.alert('Usuario Criado com sucesso');
+      setEmail("");
+      setPassword("");
+
+      navigation.navigate("Main")
+    } else {
+       Alert.alert('Erro,Campo invalido');
+    }
+  } catch (error) {
+    console.log(error);
+    
+    console.error("Erro campo invalido");
+     Alert.alert("Erro campo invalido");
+  }
+};
   return (
     <ImageBackground 
       source={require('../assets/img/LoginAndSignUp.png')}
@@ -32,18 +66,21 @@ const LoginScreen = ({ navigation }) => {
           <Ionicons name="lock-closed-outline" size={24} color="#fff" style={styles.icon} />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Senha"
             placeholderTextColor="#fff"
             secureTextEntry
             value={password}
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Menu")}>
-          <Text style={styles.buttonText}>LOGIN</Text>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Imc")}>
+          <Text style={styles.buttonText}>Entrar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.navigate("Register")}>
+          <Text style={styles.forgotText}>Não tem uma conta?</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={styles.forgotText}>Forgot your password?</Text>
+          <Text style={styles.forgotText}>Esqueceu sua senha?</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

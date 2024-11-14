@@ -4,7 +4,7 @@ import { StyleSheet, View, ImageBackground, TouchableOpacity, Text } from 'react
 const DashboardScreen = ({ navigation }) => {
   return (
     <ImageBackground 
-      source={require('../assets/img/Dashboard.jpg')}
+       source={require('../assets/img/Dashboard.jpg')}
       style={styles.background}
     >
       <View style={styles.containerText}>

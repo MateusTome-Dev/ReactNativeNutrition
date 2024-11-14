@@ -1,0 +1,90 @@
+import React, { useEffect, useState } from 'react'
+import { Image, StyleSheet, Text, View } from 'react-native'
+
+export default function foodScreen() {
+  const [objetivo, setObjetivo] = useState('');
+  const [cafeManha, setCafeManha] = useState('');
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("http://10.92.198.9:3000/api/diet/1", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setObjetivo(data.diet.objetivo);
+        setCafeManha(data.diet.cafedamanha);
+      } else {
+        Alert.alert("Erro", "Não foi possível buscar os dados.");
+      }
+    } catch (error) {
+      console.error("Erro ao buscar dados da API", error);
+      Alert.alert("Erro", "Erro ao buscar dados da API.");
+    }
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, []);
+
+  return (
+        <View style={styles.container}>
+            <View style={styles.containerImage}>
+                <Image source={require('../assets/img/lowcarb.png')} style={styles.image}/>
+            </View>
+            <View style={styles.containerText}>
+                <Text style={styles.title}>
+                 Objetivo:
+                </Text>
+                <Text style={styles.subTitle}>
+                {objetivo}
+                </Text>
+                <Text style={styles.title}>
+                Café da Manhã:
+                </Text>
+                <Text style={styles.subTitle}>
+                {cafeManha}
+                </Text>
+            </View>
+        </View>
+  )
+}
+
+const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        backgroundColor:"black"
+    },
+    containerImage:{
+        alignItems: 'center',
+        justifyContent:"center",
+
+        paddingTop:75,
+        paddingBottom:75,
+        borderBottomColor:"#7a501f",
+        borderWidth:2,
+        elevation: 5, 
+      },
+      image:{
+        height:200,
+        width:200,
+        borderRadius: 100,
+        backgroundColor:"black"
+      },
+      containerText:{
+        marginLeft:20
+      },
+      title:{
+        marginTop:26,
+        color:"#fff",
+        fontSize:22
+      },
+      subTitle:{
+        color: '#ccc',
+        fontSize: 16,
+      }
+})

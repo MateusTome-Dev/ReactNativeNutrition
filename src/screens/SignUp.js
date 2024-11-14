@@ -1,17 +1,50 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ImageBackground, TextInput, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { Alert } from 'react-native';
 
-const SignUpScreen = ({ navigation }) => {
+const SignUpScreen = () => {
+   const navigation= useNavigation()
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log('Email:', email);
-    console.log('Senha:', password);
+//http://10.92.198.9:3000/api/user/
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const user = {
+    nome: name,
+    email: email,
+    password: password,
   };
 
+  try {
+    const response = await fetch("http://10.92.198.9:3000/api/user/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (response.ok) {
+      Alert.alert('Usuario Criado com sucesso');
+      setName("");
+      setEmail("");
+      setPassword("");
+      navigation.navigate("Login");
+    } else {
+      Alert.alert('Erro,Campo invalido');
+    }
+  } catch (error) {
+    console.error("Erro campo invalido");
+    Alert.alert("Erro campo invalido");
+  }
+};
+
+  
   return (
     <ImageBackground 
       source={require('../assets/img/LoginAndSignUp.png')}
@@ -22,7 +55,7 @@ const SignUpScreen = ({ navigation }) => {
           <Ionicons name="person-outline" size={24} color="#fff" style={styles.icon} />
           <TextInput
             style={styles.input}
-            placeholder="Name"
+            placeholder="Nome"
             placeholderTextColor="#fff"
             value={name}
             onChangeText={setName}
@@ -43,18 +76,18 @@ const SignUpScreen = ({ navigation }) => {
           <Ionicons name="lock-closed-outline" size={24} color="#fff" style={styles.icon} />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Senha"
             placeholderTextColor="#fff"
             secureTextEntry
             value={password}
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Menu")}>
-          <Text style={styles.buttonText}>LOGIN</Text>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Main")}>
+          <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.forgotText}>Forgot your password?</Text>
+        <TouchableOpacity onPress={()=>navigation.navigate("Login")}>
+          <Text style={styles.forgotText}>Já tem uma conta?</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
