@@ -24,7 +24,7 @@ const Imc = ({ navigation }) => {
     };
   
     try {
-      const response = await fetch("http://10.92.198.9:3000/api/atributte", {
+      const response = await fetch("http://10.0.2.2:3000/api/atributte", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

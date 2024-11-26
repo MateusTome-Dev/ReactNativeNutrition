@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as Notifications from 'expo-notifications';
+
 import CardImc from '../components/cardImc';
 import CardHome from '../components/cardHome';
 import Footer from '../components/Footer';
@@ -9,10 +11,10 @@ import Footer from '../components/Footer';
 export default function HomeScreen() {
   const [imcValue, setImcValue] = useState('');
   const [imcState, setImcState] = useState('');
-
+  const [nome, setNome] = useState('');
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://10.92.198.9:3000/api/atributte/2", {
+      const response = await fetch("http://10.0.2.2:3000/api/atributte/1", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -34,6 +36,32 @@ export default function HomeScreen() {
 
   useEffect(() => {
     handleSubmit();
+  }, []);
+
+  const handleSubmit1 = async () => {
+    const userId = 1;
+    try {
+      const response = await fetch(`http://10.0.2.2:3000/api/user/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setNome(data.user.nome);
+      } else {
+        Alert.alert("Erro", "Não foi possível buscar os dados.");
+      }
+    } catch (error) {
+      console.error("Erro ao buscar dados da API", error);
+      Alert.alert("Erro", "Erro ao buscar dados da API.");
+    }
+  };
+
+  useEffect(() => {
+    handleSubmit1();
   }, []);
 
   const items = [
@@ -60,7 +88,7 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
           <Text style={styles.welcomeText}>Seja Bem vindo!</Text>
-          <Text style={styles.nameText}>Mateus Tomé</Text>
+          <Text style={styles.nameText}>{nome}</Text>
           <TouchableOpacity style={styles.notificationButton} onPress={handleNotificationPermission}>
             <Ionicons name="notifications-outline" size={24} color="white" />
           </TouchableOpacity>

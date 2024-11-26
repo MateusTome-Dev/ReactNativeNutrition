@@ -8,9 +8,9 @@ export default function MenuScreen() {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>Dieta Exclusivas</Text>
+        <Text style={styles.title}>Receitas Exclusivas</Text>
         <Text style={styles.subtitle}>
-          Escolha seu objetivo{`\n`}As melhores dietas para atingir seu objetivo
+          Escolha seu objetivo{`\n`}As melhores receitas para atingir seu objetivo
         </Text>
         <CardMenu />
       </ScrollView>

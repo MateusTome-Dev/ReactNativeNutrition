@@ -11,17 +11,13 @@ const LoginScreen = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-console.log(email)
-console.log(password);
-
-
   const user = {
     email: email,
     password: password,
   };
 
   try {
-    const response = await fetch("http://10.92.198.9:3000/api/user/login", {
+    const response = await fetch("http://10.0.2.2:3000/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +30,7 @@ console.log(password);
       setEmail("");
       setPassword("");
 
-      navigation.navigate("Main")
+      navigation.navigate("Imc")
     } else {
        Alert.alert('Erro,Campo invalido');
     }
@@ -73,14 +69,11 @@ console.log(password);
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Imc")}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>navigation.navigate("Register")}>
           <Text style={styles.forgotText}>Não tem uma conta?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.forgotText}>Esqueceu sua senha?</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

@@ -11,7 +11,6 @@ const SignUpScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-//http://10.92.198.9:3000/api/user/
 const handleSubmit = async (e) => {
   e.preventDefault();
   const user = {
@@ -21,7 +20,7 @@ const handleSubmit = async (e) => {
   };
 
   try {
-    const response = await fetch("http://10.92.198.9:3000/api/user/", {
+    const response = await fetch("http://10.0.2.2:3000/api/user/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +82,7 @@ const handleSubmit = async (e) => {
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Main")}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>navigation.navigate("Login")}>

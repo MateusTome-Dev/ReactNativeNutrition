@@ -7,7 +7,7 @@ export default function IMCIndicator() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://10.92.198.9:3000/api/atributte/2", {
+      const response = await fetch("http://10.0.2.2:3000/api/atributte/1", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

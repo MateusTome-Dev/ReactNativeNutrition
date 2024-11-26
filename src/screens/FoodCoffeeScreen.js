@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Image, StyleSheet, Text, View } from 'react-native'
+
 export default function FoodScreen() {
   const [objetivo, setObjetivo] = useState('');
-  const [cafeManha, setCafeManha] = useState('');
+  const [cafeTarde, setCafeTarde] = useState('');
   const handleSubmit = async () => {
     try {
       const response = await fetch("http://10.0.2.2:3000/api/diet/1", {
@@ -15,7 +16,7 @@ export default function FoodScreen() {
       if (response.ok) {
         const data = await response.json();
         setObjetivo(data.diet.objetivo);
-        setCafeManha(data.diet.cafedamanha);
+        setCafeTarde(data.diet.lanchedatarde);
       } else {
         Alert.alert("Erro", "Não foi possível buscar os dados.");
       }
@@ -33,7 +34,7 @@ export default function FoodScreen() {
   return (
         <View style={styles.container}>
             <View style={styles.containerImage}>
-                <Image source={require('../assets/img/CafeManha.png')} style={styles.image}/>
+                <Image source={require('../assets/img/cafeDaTarde.jpg')} style={styles.image}/>
             </View>
             <View style={styles.containerText}>
                 <Text style={styles.title}>
@@ -43,10 +44,10 @@ export default function FoodScreen() {
                 {objetivo}
                 </Text>
                 <Text style={styles.title}>
-                Café da Manhã:
+                Café da Tarde:
                 </Text>
                 <Text style={styles.subTitle}>
-                {cafeManha}
+                {cafeTarde}
                 </Text>
             </View>
         </View>

@@ -3,10 +3,10 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const diets = [
-  { name: 'Café da manhã', color: '#7a501f', image: require('../assets/img/lowcarb.png') },
-  { name: 'Almoço', color: '#7a501f', image: require('../assets/img/lowcarb.png') },
-  { name: 'Café da tarde', color: '#7a501f', image: require('../assets/img/lowcarb.png') },
-  { name: 'Janta', color: '#7a501f', image: require('../assets/img/lowcarb.png') },
+  { name: 'Café da manhã', color: '#7a501f', image: require('../assets/img/CafeManha.png') , navigator: "CafeManha"},
+  { name: 'Almoço', color: '#7a501f', image: require('../assets/img/almoco.png') , navigator: "Almoco"},
+  { name: 'Café da tarde', color: '#7a501f', image: require('../assets/img/cafeDaTarde.jpg') , navigator: "CafeTarde"},
+  { name: 'Janta', color: '#7a501f', image: require('../assets/img/jantar.png') , navigator: "Janta"},
 ];
 
 export default function CardHome() {
@@ -14,7 +14,7 @@ export default function CardHome() {
   return (
     <View>
       {diets.map((diet, index) => (
-        <TouchableOpacity key={index} onPress={()=>navigation.navigate("FoodList")} style={[styles.card, { backgroundColor: diet.color }]}>
+        <TouchableOpacity key={index} onPress={()=>navigation.navigate(diet.navigator)} style={[styles.card, { backgroundColor: diet.color }]}>
           <Text style={styles.cardText}>{diet.name}</Text>
           <Image source={diet.image} style={styles.cardImage} />
         </TouchableOpacity>
